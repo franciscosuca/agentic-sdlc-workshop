@@ -1,0 +1,24 @@
+trigger:
+  tags:
+    include:
+      - "*"
+
+variables:
+  tag: "$(Build.SourceBranchName)"
+
+steps:
+  - task: Docker@2
+    displayName: Build image
+    inputs:
+      containerRegistry: <your-registry-service-connection>
+      repository: <your-image-repository>
+      command: build
+      Dockerfile: $(Build.SourcesDirectory)/Dockerfile
+      tags: $(tag)
+  - task: Docker@2
+    displayName: Push image
+    inputs:
+      containerRegistry: <your-registry-service-connection>
+      repository: <your-image-repository>
+      command: push
+      tags: $(tag)

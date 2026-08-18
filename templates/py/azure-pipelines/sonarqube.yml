@@ -1,0 +1,73 @@
+trigger:
+  branches:
+      include:
+        - main
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+  - task: UsePythonVersion@0
+    inputs:
+      versionSpec: '3.14'
+
+  - task: SonarQubePrepare@7
+    displayName: SonarQubePrepare - branch analysis
+    condition: and(succeeded(), eq(variables['System.PullRequest.PullRequestId'], ''))
+    inputs:
+      SonarQube: 'SonarQube'
+      scannerMode: 'cli'
+      configMode: 'manual'
+      cliProjectKey: '<your-sonarqube-project-key>'
+      cliProjectName: '<your-sonarqube-project-name>'
+      extraProperties: |
+        sonar.branch.name=$(Build.SourceBranchName)
+        sonar.python.coverage.reportPaths=coverage.xml
+        sonar.test.inclusions=**/test_*.py
+
+  - task: SonarQubePrepare@7
+    condition: and(succeeded(), ne(variables['System.PullRequest.PullRequestId'], ''))
+    displayName: SonarQubePrepare - Pull Request analysis
+    inputs:
+      SonarQube: 'SonarQube' # service connection name
+      scannerMode: 'cli'
+      configMode: 'manual'
+      cliProjectKey: '<your-sonarqube-project-key>'
+      cliProjectName: '<your-sonarqube-project-name>'
+      extraProperties: |
+        sonar.pullrequest.key=$(System.PullRequest.PullRequestId)
+        sonar.pullrequest.branch=$(System.PullRequest.SourceBranch)
+        sonar.python.coverage.reportPaths=coverage.xml
+        sonar.test.inclusions=**/test_*.py
+
+  - script: |
+      python -m pip install --upgrade pip
+      pip install -r requirements-dev.txt
+    displayName: Install dependencies
+
+  - script: |
+      set -e
+      mkdir -p test-results
+      coverage run -m pytest --junitxml=test-results/junit.xml -q
+      coverage xml -o coverage.xml
+    displayName: Run tests with coverage
+
+  - task: PublishTestResults@2
+    condition: succeededOrFailed()
+    inputs:
+      testResultsFormat: JUnit
+      testResultsFiles: test-results/junit.xml
+      failTaskOnFailedTests: true
+
+  - task: PublishCodeCoverageResults@2
+    inputs:
+      codeCoverageTool: 'Cobertura'
+      summaryFileLocation: '$(System.DefaultWorkingDirectory)/coverage.xml'
+      reportDirectory: '$(System.DefaultWorkingDirectory)'
+      failIfCoverageEmpty: true
+
+  - task: SonarQubeAnalyze@7
+
+  - task: SonarQubePublish@7
+    inputs:
+      pollingTimeoutSec: '300'
