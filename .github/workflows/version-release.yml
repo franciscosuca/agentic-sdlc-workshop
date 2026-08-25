@@ -36,6 +36,8 @@ jobs:
       packages: write
       issues: write
       pull-requests: write
+      pages: write
+      id-token: write
 
     steps:
       - name: Checkout code
@@ -84,6 +86,16 @@ jobs:
             echo "No package.json found; skipping build."
           fi
 
+      - name: Setup Pages
+        if: hashFiles('dist') != ''
+        uses: actions/configure-pages@v5
+
+      - name: Upload Pages artifact
+        if: hashFiles('dist') != ''
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: './dist'
+
       - name: Semantic Release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -104,3 +116,18 @@ jobs:
 
           NODE_PATH="$release_tools_dir/node_modules" \
             bun "$release_tools_dir/node_modules/semantic-release/bin/semantic-release.js"
+
+  deploy-pages:
+    needs: build-and-release
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
