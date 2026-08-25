@@ -1,0 +1,10 @@
+{
+  "name": "agentic-sdlc-workshop-site",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "bun --hot index.html",
+    "start": "bun index.html",
+    "build": "bun build ./index.html --outdir dist --minify"
+  }
+}
