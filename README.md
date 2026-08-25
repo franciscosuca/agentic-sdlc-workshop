@@ -1,0 +1,9 @@
+
+
+# Learnings & Repository Overview
+
+| Repository | Key Learnings & Takeaways |
+| :--- | :--- |
+| [prompt-pack](https://github.com/franciscosuca/prompt-pack) | <ul><li>**Orchestrator Workflow for Agentic Development:** Explored patterns aligned with the [Agentic AI Foundation (AAIF / agents.md)](https://agents.md/) under the Linux Foundation. Defined a stack-specific orchestrator that coordinates implementation strategies alongside a test oracle through configured custom agents.</li><li>**Agent Skills:** Automated repetitive tasks using [Agent Skills](https://agentskills.io/home) (`SKILL.md`), packaging common tools and command routines to reduce context and token overhead.</li><li>**Model Context Protocol (MCP):** Connected local agents to cloud-hosted MCP servers (e.g., Miro, Figma, GitHub, Chrome DevTools) to expand capabilities with remote tool integrations.</li></ul> |
+| [ai4se-local-llm-guide (setup-fco)](https://github.com/GEA-AIHub/ai4se-local-llm-guide/tree/main/contributions/setup-fco) | <ul><li>**Local LLM Exploration:** Ongoing investigation into utilizing open-weight multimodal LLMs locally within agentic workflows.</li><li>**Hardware & Capability Benchmarking:** Established a streamlined benchmark to evaluate which models run effectively based on local machine hardware specifications and determine their best use cases (e.g., coding, deployment, ideation).</li></ul> |
+| [exan](https://github.com/franciscosuca/exan) | <ul><li>**Vision & OCR Exploration:** Developed an application to explore text recognition from images using multimodal LLM providers.</li><li>**Inference & Comparison Service:** Built an inference service to compare extracted text across images and evaluate similarity scores for the end user.</li></ul> |
