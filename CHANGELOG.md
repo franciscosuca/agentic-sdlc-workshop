@@ -1,3 +1,9 @@
+## [1.0.1](https://github.com/franciscosuca/agentic-sdlc-workshop/compare/v1.0.0...v1.0.1) (2026-08-25)
+
+### Bug Fixes
+
+* **skip Bun tests when no test script exists:** fix: skip Bun tests when no test script exists ([031fe7e](https://github.com/franciscosuca/agentic-sdlc-workshop/commit/031fe7ee992bb60287debd4410303adbdf1127b1))
+
 ## 1.0.0 (2026-08-25)
 
 ### Features
