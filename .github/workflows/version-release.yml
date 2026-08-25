@@ -44,33 +44,63 @@ jobs:
           fetch-depth: 0
           persist-credentials: false
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
         with:
-          node-version: '24'
-          cache: 'npm'
+          bun-version: 'latest'
+
+      - name: Cache Bun dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.bun/install/cache
+          key: ${{ runner.os }}-bun-${{ hashFiles('**/bun.lock', '**/bun.lockb', '**/package.json') }}
+          restore-keys: |
+            ${{ runner.os }}-bun-
 
       - name: Install dependencies
-        run: npm ci
+        if: hashFiles('package.json') != ''
+        run: |
+          if [ -f package.json ]; then
+            bun install --frozen-lockfile
+          else
+            echo "No package.json found; skipping dependency installation."
+          fi
 
       - name: Run tests (if any)
-        run: npm test --if-present
+        if: hashFiles('package.json') != ''
+        run: |
+          if [ -f package.json ]; then
+            bun run --if-present test
+          else
+            echo "No package.json found; skipping tests."
+          fi
 
       - name: Build web application
-        run: npm run build
+        if: hashFiles('package.json') != ''
+        run: |
+          if [ -f package.json ]; then
+            bun run build
+          else
+            echo "No package.json found; skipping build."
+          fi
 
       - name: Semantic Release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: |
-          npx \
-            --package semantic-release@${SR_VERSION} \
-            --package @semantic-release/changelog@${SR_CHANGELOG_VERSION} \
-            --package @semantic-release/commit-analyzer@${SR_COMMIT_ANALYZER_VERSION} \
-            --package @semantic-release/git@${SR_GIT_VERSION} \
-            --package @semantic-release/github@${SR_GITHUB_VERSION} \
-            --package @semantic-release/npm@${SR_NPM_VERSION} \
-            --package @semantic-release/release-notes-generator@${SR_RELEASE_NOTES_VERSION} \
-            --package conventional-changelog-conventionalcommits@${CC_CONVENTIONALCOMMITS_VERSION} \
-            semantic-release
+          release_tools_dir="$(mktemp -d)"
+          trap 'rm -rf "$release_tools_dir"' EXIT
+
+          bun install --cwd "$release_tools_dir" --no-save \
+            semantic-release@${SR_VERSION} \
+            @semantic-release/changelog@${SR_CHANGELOG_VERSION} \
+            @semantic-release/commit-analyzer@${SR_COMMIT_ANALYZER_VERSION} \
+            @semantic-release/git@${SR_GIT_VERSION} \
+            @semantic-release/github@${SR_GITHUB_VERSION} \
+            @semantic-release/npm@${SR_NPM_VERSION} \
+            @semantic-release/release-notes-generator@${SR_RELEASE_NOTES_VERSION} \
+            conventional-changelog-conventionalcommits@${CC_CONVENTIONALCOMMITS_VERSION}
+
+          NODE_PATH="$release_tools_dir/node_modules" \
+            bun "$release_tools_dir/node_modules/semantic-release/bin/semantic-release.js"
