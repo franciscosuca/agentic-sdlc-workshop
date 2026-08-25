@@ -3,9 +3,255 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Hello World</title>
+    <title>Workshop Application: Agentic SDLC</title>
+    <meta
+      name="description"
+      content="Workshop application for the Agentic SDLC workshop — multi-agent orchestration, agent skills, multimodal AI, and local LLM benchmarking."
+    />
+    <link rel="stylesheet" href="./styles.css" />
+    <script type="module" src="./src/main.ts"></script>
   </head>
   <body>
-    <h1>Hello, world!</h1>
+    <div id="bend-root" class="bend-root">
+      <canvas id="bend-source" layoutsubtree="true"></canvas>
+
+      <div id="bend-content" class="bend-content">
+        <header class="hero">
+          <p class="intro">Motivations letter for applying to the</p>
+          <p class="eyebrow">Workshop Application</p>
+          <h1>Agentic <span class="accent">SDLC</span></h1>
+          <p class="byline">
+            By &nbsp
+            <a
+              href="https://github.com/franciscosuca"
+              target="_blank"
+              rel="noopener noreferrer"
+              ><svg
+                class="gh-icon"
+                viewBox="0 0 16 16"
+                width="16"
+                height="16"
+                aria-hidden="true"
+                fill="currentColor"
+              >
+                <path
+                  d="M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z"
+                /></svg
+              >franciscosuca</a
+            >
+          </p>
+        </header>
+
+        <main>
+          <section class="section section-columns" aria-labelledby="s1">
+            <div class="section-head">
+              <span class="section-index">01</span>
+              <h2 id="s1">What I explored, built &amp; changed</h2>
+            </div>
+
+            <div class="cards">
+              <article class="card">
+                <h3>Agent Customization, Skills &amp; Context Optimization</h3>
+                <p class="card-links">
+                  <a
+                    href="https://github.com/franciscosuca/prompt-pack"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >prompt-pack</a
+                  >
+                </p>
+                <ul>
+                  <li>
+                    Explored agent patterns from the
+                    <a
+                      href="https://agents.md/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      >Agentic AI Foundation</a
+                    >
+                    and built an <code>orchestrator</code> workflow that pairs a
+                    <code>test-oracle</code> writing acceptance tests upfront
+                    with a <code>blind-implementer</code> coding against them,
+                    sight unseen.
+                  </li>
+                  <li>
+                    Created reusable agent instructions and packaged helpful
+                    day-to-day routines with
+                    <a
+                      href="https://agentskills.io/home"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      >Agent Skills</a
+                    >
+                    (<code>SKILL.md</code>) to cut down repetitive context, keep
+                    agents focused, and save tokens.
+                  </li>
+                  <li>
+                    Hooked up agents with Model Context Protocol (MCP) servers
+                    (GitHub, Figma, Miro, Chrome DevTools) to give them
+                    practical superpowers in UI design, code reviews, and
+                    browser testing.
+                  </li>
+                </ul>
+              </article>
+
+              <article class="card">
+                <h3>Multimodal AI &amp; Schema Integration</h3>
+                <p class="card-links">
+                  <a
+                    href="https://github.com/franciscosuca/exan"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >exan</a
+                  >
+                </p>
+                <ul>
+                  <li>
+                    Built an image-scanning and OCR analysis app powered by
+                    multimodal LLMs.
+                  </li>
+                  <li>
+                    Crafted prompt structures and clean data contracts that
+                    bridge provider outputs with deterministic application
+                    schemas for reliable text extraction and similarity scoring.
+                  </li>
+                </ul>
+              </article>
+
+              <article class="card">
+                <h3>Local LLM Benchmarking for Agentic Development</h3>
+                <p class="card-links">
+                  <a
+                    href="https://github.com/GEA-AIHub/ai4se-local-llm-guide/tree/main/contributions/setup-fco"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >ai4se-local-llm-guide</a
+                  >
+                </p>
+                <ul>
+                  <li>
+                    Experimented with open-weight multimodal models on local
+                    machines to find the sweet spot: figuring out what tasks
+                    (like quick ideation, drafting, and boilerplate) work great
+                    locally versus when it makes sense to bring in frontier
+                    cloud models.
+                  </li>
+                </ul>
+              </article>
+            </div>
+          </section>
+
+          <section class="section" aria-labelledby="s2">
+            <div class="section-head">
+              <span class="section-index">02</span>
+              <h2 id="s2">What I learned — challenges &amp; limitations</h2>
+            </div>
+
+            <div class="columns">
+              <div class="column">
+                <h3>Key takeaways</h3>
+                <ul>
+                  <li>
+                    Giving agents well-structured context (using
+                    <code>SKILL.md</code> and tailored
+                    <code>.agent.md</code> setups) makes their reasoning much
+                    more consistent while keeping prompts lean.
+                  </li>
+                  <li>
+                    Separating test generation from code implementation keeps
+                    everything honest — preventing hallucinations and keeping
+                    coding goals clear.
+                  </li>
+                </ul>
+              </div>
+              <div class="column">
+                <h3>Challenges</h3>
+                <ul>
+                  <li>
+                    Guiding autonomous code generation smoothly without getting
+                    stuck in feedback loops or straying from the original
+                    intent.
+                  </li>
+                  <li>
+                    Bridging the gap between creative multimodal outputs and
+                    strict, predictable software schemas.
+                  </li>
+                </ul>
+              </div>
+              <div class="column">
+                <h3>Limitations</h3>
+                <ul>
+                  <li>
+                    Local models can still struggle with large context windows,
+                    reliable tool calling, and complex multi-file reasoning
+                    compared to cloud frontier models.
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </section>
+
+          <section class="section" aria-labelledby="s3">
+            <div class="section-head">
+              <span class="section-index">03</span>
+              <h2 id="s3">Why I want to join the workshop</h2>
+            </div>
+            <ul class="prose-list">
+              <li>
+                I've really enjoyed following Daniel Meppiel's
+                <em>Agentic SDLC Handbook</em>, and I'd love to take these
+                hands-on experiments to the next level by turning them into
+                dependable, production-ready workflows for our team.
+              </li>
+              <li>
+                I would be gladto meet up with Daniel and other practitioners
+                in Düsseldorf to swap ideas, discuss real-world multi-agent
+                coordination, and explore practical quality gates and governance
+                together.
+              </li>
+            </ul>
+          </section>
+
+          <section class="section" aria-labelledby="s4">
+            <div class="section-head">
+              <span class="section-index">04</span>
+              <h2 id="s4">How I would contribute &amp; help colleagues afterward</h2>
+            </div>
+            <ul class="prose-list">
+              <li>
+                Host lunch-and-learns and interactive sessions to help teammates
+                level up from simple autocomplete to structured, test-driven
+                agent workflows.
+              </li>
+              <li>
+                Put together clear, practical guidelines on when to run models
+                locally versus leveraging cloud agents for the best balance of
+                speed, cost, and privacy.
+              </li>
+            </ul>
+          </section>
+        </main>
+
+        <footer class="footer">
+          <p>
+            Built with
+            <a
+              href="https://canvasui.dev/docs/components/bend"
+              target="_blank"
+              rel="noopener noreferrer"
+              >Canvas UI — Bend</a
+            >. Scroll the page and watch the edges fold.
+          </p>
+        </footer>
+      </div>
+
+      <canvas id="bend-output" aria-hidden="true"></canvas>
+    </div>
+
+    <p id="bend-note" class="bend-note" hidden>
+      The bend effect needs Chrome's html-in-canvas API (origin trial or
+      <code>chrome://flags/#canvas-draw-element</code>). You're seeing the
+      graceful fallback — same content, no fold.
+    </p>
   </body>
 </html>
